@@ -1,0 +1,42 @@
+# Node dependencies
+node_modules/
+
+# Environment files
+.env
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+logs
+*.log
+
+# Build outputs
+dist/
+build/
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Temporary files
+*.tmp
+*.swp
+
+# Backup files
+*.bak
+*.orig
+
+# Coverage reports
+coverage/
+
+# Local data
+*.local
+
+# Optional lock files (if not needed)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
