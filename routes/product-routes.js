@@ -49,4 +49,27 @@ router.post("/add", async (req, res) => {
   }
 });
 
+// Update Product Endpoint
+router.put("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updatedProduct = await Product.findByIdAndUpdate(id, req.body, {
+      new: true,      // return the updated product
+      runValidators: true, // recheck schema validation
+    });
+
+    if (!updatedProduct) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    res.status(200).json({
+      message: "Product updated successfully!",
+      product: updatedProduct,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while updating product." });
+  }
+});
+
 export default router;
