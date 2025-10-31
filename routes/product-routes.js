@@ -72,4 +72,26 @@ router.put("/:id", async (req, res) => {
   }
 });
 
+// Delete Product Endpoint
+router.delete("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Try to delete by ID
+    const deletedProduct = await Product.findByIdAndDelete(id);
+
+    if (!deletedProduct) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    res.status(200).json({
+      message: "Product deleted successfully!",
+      deletedProduct,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while deleting product." });
+  }
+});
+
 export default router;
