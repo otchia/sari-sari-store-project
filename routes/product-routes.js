@@ -94,4 +94,32 @@ router.delete("/:id", async (req, res) => {
   }
 });
 
+// GET all products with optional sorting
+router.get("/", async (req, res) => {
+  try {
+    // Get sorting query from URL (example: ?sort=name or ?sort=category)
+    const sortBy = req.query.sort || "name"; // default = alphabetical by name
+    let sortOptions = {};
+
+    if (sortBy === "name") {
+      sortOptions = { name: 1 }; // 1 = ascending order (A–Z)
+    } else if (sortBy === "category") {
+      sortOptions = { category: 1 };
+    } else if (sortBy === "date") {
+      sortOptions = { createdAt: -1 }; // newest first
+    }
+
+    const products = await Product.find().sort(sortOptions);
+
+    res.status(200).json({
+      message: `Products sorted by ${sortBy}`,
+      count: products.length,
+      products,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while retrieving products." });
+  }
+});
+
 export default router;
