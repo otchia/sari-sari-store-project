@@ -1,4 +1,4 @@
-import Admin from "../models/adminmodel.js";
+import Admin from "../models/admin-model.js";
 
 // REGISTER ADMIN
 export const registerAdmin = async (req, res) => {
