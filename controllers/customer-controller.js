@@ -1,4 +1,4 @@
-import Customer from "../models/customermodel.js";
+import Customer from "../models/customer-model.js";
 
 export const googleLogin = async (req, res) => {
   try {
