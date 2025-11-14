@@ -1,8 +1,9 @@
 import express from "express";
-import { googleLogin } from "../controllers/customer-controller.js";
+import { registerCustomer, loginCustomer } from "../controllers/customer-controller.js";
 
 const router = express.Router();
 
-router.post("/login", googleLogin);
+router.post("/register", registerCustomer);
+router.post("/login", loginCustomer);
 
 export default router;

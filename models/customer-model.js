@@ -3,7 +3,8 @@ import mongoose from "mongoose";
 const customerSchema = new mongoose.Schema({
   name: { type: String },
   email: { type: String, required: true, unique: true },
-  photoUrl: { type: String },
+  password: { type: String },   // for email/password login
+  photoUrl: { type: String },   // for Google login
   createdAt: { type: Date, default: Date.now },
 });
 
