@@ -14,14 +14,6 @@ connectDB();
 
 const app = express();
 
-// ✅ CORS middleware
-// allow your frontend origin (Flutter web runs usually on http://localhost:5000 or 5173)
-app.use(cors({
-  origin: "http://localhost:5000", // replace with your Flutter web URL
-  methods: ["GET","POST","PUT","DELETE"],
-  credentials: true
-}));
-
 app.use(bodyParser.json());
 
 // 🔥 Register routes
