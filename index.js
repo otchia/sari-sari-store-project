@@ -14,14 +14,15 @@ connectDB();
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 
-// 🔥 Register routes
+// ALL ROUTES REGISTERED HERE
 app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/customer", customerRoutes);
-app.use("/api/customer", googleAuthRoutes); 
+app.use("/api/customer", googleAuthRoutes); // <-- correct
 
-// 🔥 Start server
+// SERVER LISTENER AT THE END
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

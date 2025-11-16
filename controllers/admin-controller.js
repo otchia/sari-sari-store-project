@@ -53,8 +53,11 @@ export const registerAdmin = async (req, res) => {
   }
 };
 
+
 // LOGIN ADMIN
 export const loginAdmin = async (req, res) => {
+  console.log("LOGIN HIT:", req.body); // ✅ Must be inside the function
+
   try {
     const { username, password } = req.body;
 
