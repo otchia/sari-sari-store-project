@@ -24,7 +24,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/customer", customerRoutes);
-app.use("/api/customer/google", googleAuthRoutes);
+app.use("/api/customer", googleAuthRoutes);
 
 // 🔥 START SERVER
 const PORT = process.env.PORT || 5000;
