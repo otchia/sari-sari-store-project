@@ -8,6 +8,7 @@ import adminRoutes from "./routes/admin-routes.js";
 import productRoutes from "./routes/product-routes.js";
 import customerRoutes from "./routes/customer-routes.js";
 import googleAuthRoutes from "./routes/google-auth.routes.js";
+import storeSettingsRoutes from "./routes/store-settings-routes.js";
 
 dotenv.config();
 connectDB();
@@ -25,6 +26,7 @@ app.use("/api/admin", adminRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/customer", googleAuthRoutes);
+app.use("/api/store-settings", storeSettingsRoutes);
 
 // 🔥 START SERVER
 const PORT = process.env.PORT || 5000;
