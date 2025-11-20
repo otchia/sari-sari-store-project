@@ -9,6 +9,7 @@ import productRoutes from "./routes/product-routes.js";
 import customerRoutes from "./routes/customer-routes.js";
 import googleAuthRoutes from "./routes/google-auth.routes.js";
 import storeSettingsRoutes from "./routes/store-settings-routes.js";
+import cartRoutes from "./routes/carts-routes.js";
 
 dotenv.config();
 connectDB();
@@ -27,6 +28,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/customer", googleAuthRoutes);
 app.use("/api/store-settings", storeSettingsRoutes);
+app.use("/api/cart", cartRoutes);
+
 
 // 🔥 START SERVER
 const PORT = process.env.PORT || 5000;
