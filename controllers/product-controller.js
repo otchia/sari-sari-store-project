@@ -1,8 +1,9 @@
 import Product from "../models/product-model.js";
 
-// Add product
+// Add new product
 export const addProduct = async (req, res) => {
   try {
+    // Check if Multer uploaded a file
     const uploadedImage = req.file ? `/uploads/${req.file.filename}` : null;
 
     const {
@@ -15,10 +16,11 @@ export const addProduct = async (req, res) => {
       stock,
       description,
       weight,
-      shelfLife
+      shelfLife,
     } = req.body;
 
-    const finalImage = uploadedImage || imageUrl;
+    // Use uploaded image if exists, otherwise fallback to provided URL
+    const finalImage = uploadedImage || imageUrl || "";
 
     if (!finalImage || !category || !brand || !name || !price || !stock || !weight) {
       return res.status(400).json({ message: "Missing required fields." });
@@ -34,98 +36,49 @@ export const addProduct = async (req, res) => {
       stock,
       description,
       weight,
-      shelfLife: shelfLife ? new Date(shelfLife) : null
+      shelfLife: shelfLife ? new Date(shelfLife) : null,
     });
 
     await newProduct.save();
-
-    res.status(201).json({
-      message: "Product added successfully!",
-      product: newProduct
-    });
+    res.status(201).json({ message: "Product added successfully!", product: newProduct });
 
   } catch (error) {
-    console.error("Add Product Error:", error);
+    console.error(error);
     res.status(500).json({ message: "Server error while adding product." });
   }
 };
 
-// Get all products (excluding soft-deleted)
+// Get all products
 export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({ isDeleted: false }).sort({ createdAt: -1 });
-
-    res.status(200).json({
-      message: "Products retrieved successfully",
-      count: products.length,
-      products
-    });
+    const products = await Product.find().sort({ createdAt: -1 });
+    res.status(200).json({ message: "Products retrieved successfully", count: products.length, products });
   } catch (error) {
-    console.error("Get All Products Error:", error);
+    console.error(error);
     res.status(500).json({ message: "Server error while retrieving products." });
-  }
-};
-
-// Get one product
-export const getProductById = async (req, res) => {
-  try {
-    const product = await Product.findById(req.params.id);
-
-    if (!product || product.isDeleted) {
-      return res.status(404).json({ message: "Product not found." });
-    }
-
-    res.status(200).json({ message: "Product found", product });
-  } catch (error) {
-    console.error("Get Product Error:", error);
-    res.status(500).json({ message: "Server error while retrieving product." });
   }
 };
 
 // Update product
 export const updateProduct = async (req, res) => {
   try {
-    const product = await Product.findOneAndUpdate(
-      { _id: req.params.id, isDeleted: false },
-      req.body,
-      { new: true, runValidators: true }
-    );
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found or already deleted." });
-    }
-
-    res.status(200).json({
-      message: "Product updated successfully!",
-      product
-    });
-
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+    if (!updatedProduct) return res.status(404).json({ message: "Product not found." });
+    res.status(200).json({ message: "Product updated successfully!", product: updatedProduct });
   } catch (error) {
-    console.error("Update Product Error:", error);
+    console.error(error);
     res.status(500).json({ message: "Server error while updating product." });
   }
 };
 
-// Soft delete product
+// Delete product
 export const deleteProduct = async (req, res) => {
   try {
-    const product = await Product.findOneAndUpdate(
-      { _id: req.params.id, isDeleted: false },
-      { isDeleted: true, isActive: false },
-      { new: true }
-    );
-
-    if (!product) {
-      return res.status(404).json({ message: "Product not found or already deleted." });
-    }
-
-    res.status(200).json({
-      message: "Product soft-deleted successfully!",
-      product
-    });
-
+    const deletedProduct = await Product.findByIdAndDelete(req.params.id);
+    if (!deletedProduct) return res.status(404).json({ message: "Product not found." });
+    res.status(200).json({ message: "Product deleted successfully!", deletedProduct });
   } catch (error) {
-    console.error("Delete Product Error:", error);
+    console.error(error);
     res.status(500).json({ message: "Server error while deleting product." });
   }
 };

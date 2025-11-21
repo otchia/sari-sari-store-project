@@ -1,21 +1,17 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
-  imageUrl: { type: String, required: true },
-  category: { type: String, required: true },
+  imageUrl: { type: String, required: true }, // Product Image
+  category: { type: String, required: true }, // or Array if multiple categories
   brand: { type: String, required: true },
   name: { type: String, required: true },
-  variation: { type: String },
+  variation: { type: String }, // Optional
   price: { type: Number, required: true, min: 0 },
   stock: { type: Number, required: true, min: 0 },
-  description: { type: String },
-  weight: { type: Number, required: true, min: 0 },
-  shelfLife: { type: Date },
+  description: { type: String }, // Optional
+  weight: { type: Number, required: true, min: 0 }, // in grams
+  shelfLife: { type: Date }, // Optional
   createdAt: { type: Date, default: Date.now },
-
-  // ⭐ Soft Delete
-  isDeleted: { type: Boolean, default: false },
-  isActive: { type: Boolean, default: true }
 });
 
 export default mongoose.model("Product", productSchema);
