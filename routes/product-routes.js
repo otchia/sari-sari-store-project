@@ -3,13 +3,14 @@ import { upload } from "../middleware/upload.js";
 import {
   addProduct,
   getAllProducts,
+  getProductById,
   updateProduct,
-  deleteProduct,
+  deleteProduct
 } from "../controllers/product-controller.js";
 
 const router = express.Router();
 
-// Image upload endpoint
+// Upload route
 router.post("/upload-image", upload.single("image"), (req, res) => {
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
 
@@ -17,8 +18,10 @@ router.post("/upload-image", upload.single("image"), (req, res) => {
   res.json({ imageUrl });
 });
 
+// CRUD routes
 router.post("/add", addProduct);
 router.get("/", getAllProducts);
+router.get("/:id", getProductById);
 router.put("/:id", updateProduct);
 router.delete("/:id", deleteProduct);
 
