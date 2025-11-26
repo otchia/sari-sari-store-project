@@ -10,6 +10,8 @@ import customerRoutes from "./routes/customer-routes.js";
 import googleAuthRoutes from "./routes/google-auth.routes.js";
 import storeSettingsRoutes from "./routes/store-settings-routes.js";
 import cartRoutes from "./routes/carts-routes.js";
+import orderRoutes from "./routes/order-routes.js";
+import adminOrderRoutes from "./routes/admin-order-routes.js";
 
 dotenv.config();
 connectDB();
@@ -24,11 +26,13 @@ app.use("/uploads", express.static("uploads"));
 
 // 🔥 REGISTER ROUTES
 app.use("/api/admin", adminRoutes);
+app.use("/api/admin", adminOrderRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/customer", customerRoutes);
 app.use("/api/customer", googleAuthRoutes);
 app.use("/api/store-settings", storeSettingsRoutes);
 app.use("/api/cart", cartRoutes);
+app.use("/api/orders", orderRoutes);
 
 
 // 🔥 START SERVER
