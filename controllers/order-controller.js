@@ -166,6 +166,52 @@ export const getCustomerOrders = async (req, res) => {
   }
 };
 
+// GET ACTIVE ORDERS FOR A CUSTOMER
+export const getActiveOrders = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const orders = await Order.find({ 
+      customerId: userId,
+      status: { $in: ['pending', 'ready_for_pickup', 'out_for_delivery'] }
+    })
+    .sort({ createdAt: -1 });
+
+    res.status(200).json({ orders });
+
+  } catch (error) {
+    console.error("Error fetching active orders:", error);
+    res.status(500).json({ message: "Error fetching active orders", error: error.message });
+  }
+};
+
+// GET PURCHASE HISTORY FOR A CUSTOMER
+export const getPurchaseHistory = async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    if (!userId) {
+      return res.status(400).json({ message: "User ID is required" });
+    }
+
+    const orders = await Order.find({ 
+      customerId: userId,
+      status: { $in: ['completed', 'cancelled'] }
+    })
+    .sort({ completedAt: -1, updatedAt: -1 });
+
+    res.status(200).json({ orders });
+
+  } catch (error) {
+    console.error("Error fetching purchase history:", error);
+    res.status(500).json({ message: "Error fetching purchase history", error: error.message });
+  }
+};
+
 // GET SINGLE ORDER DETAILS (AC10, AC11)
 export const getOrderById = async (req, res) => {
   try {

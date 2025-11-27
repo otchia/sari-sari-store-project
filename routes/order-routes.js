@@ -2,6 +2,8 @@ import express from "express";
 import {
   createOrder,
   getCustomerOrders,
+  getActiveOrders,
+  getPurchaseHistory,
   getOrderById,
   getCustomerNotifications,
   markNotificationsAsRead,
@@ -17,6 +19,14 @@ router.post("/checkout", createOrder);
 // GET ALL ORDERS FOR A CUSTOMER
 // GET /api/orders/customer/:userId
 router.get("/customer/:userId", getCustomerOrders);
+
+// GET ACTIVE ORDERS FOR A CUSTOMER
+// GET /api/orders/customer/:userId/active
+router.get("/customer/:userId/active", getActiveOrders);
+
+// GET PURCHASE HISTORY FOR A CUSTOMER
+// GET /api/orders/customer/:userId/history
+router.get("/customer/:userId/history", getPurchaseHistory);
 
 // GET SINGLE ORDER DETAILS
 // GET /api/orders/:orderId
